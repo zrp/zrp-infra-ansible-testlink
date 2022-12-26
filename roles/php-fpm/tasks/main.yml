@@ -1,5 +1,4 @@
 ---
-
 - rpm_key:
     state: present
     key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
@@ -56,7 +55,7 @@
     option: listen
     value: /var/run/php-fpm/php-fpm.sock
   notify:
-  - Restart php-fpm
+    - Restart php-fpm
 
 - name: Change php-fpm user
   ini_file:
@@ -65,7 +64,7 @@
     option: user
     value: nginx
   notify:
-  - Restart php-fpm
+    - Restart php-fpm
 
 - name: Change php-fpm group
   ini_file:
@@ -74,4 +73,4 @@
     option: group
     value: nginx
   notify:
-  - Restart php-fpm
+    - Restart php-fpm

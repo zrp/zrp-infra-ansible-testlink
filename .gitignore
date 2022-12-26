@@ -130,3 +130,4 @@ dmypy.json
 
 # Binary files
 .DS_Store
+vault_password_file

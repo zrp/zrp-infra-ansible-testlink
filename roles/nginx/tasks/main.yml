@@ -1,7 +1,6 @@
 ---
-
 - name: Install nginx
-  yum: 
+  yum:
     name: nginx
     state: present
 
@@ -22,7 +21,7 @@
   notify: Restart nginx
 
 - name: Start Nginx Service
-  service: 
+  service:
     name: nginx
     state: started
     enabled: yes

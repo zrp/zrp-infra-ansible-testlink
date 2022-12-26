@@ -1,5 +1,4 @@
 ---
-
 - name: Disable SELinux
   selinux:
     state: disabled
@@ -8,7 +7,7 @@
   shell: sleep 5 && systemctl reboot
   async: 300
   poll: 0
- 
+
 - name: Wait for system to come back online
   wait_for_connection:
     delay: 60

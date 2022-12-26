@@ -1,12 +1,11 @@
 ---
-
 - name: Install unzip
-  package:
+  dnf:
     name: unzip
     state: present
 
 - name: Download and unarchive TestLink
-  unarchive: 
+  unarchive:
     src: https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/testlink_1_9_20_fixed.zip
     dest: /var/www/
     remote_src: yes
@@ -20,25 +19,25 @@
     path: /var/www/testlink/gui/templates_c
     owner: nginx
     group: nginx
-    mode: '0777'
+    mode: "0777"
 
 - name: Create a directory (/var/testlink)
   file:
     path: /var/testlink
     state: directory
-    mode: '0777'
+    mode: "0777"
 
 - name: Create a directory (/var/testlink/logs)
   file:
     path: /var/testlink/logs
     state: directory
-    mode: '0777'
+    mode: "0777"
 
 - name: Create a directory (/var/testlink/upload_area)
   file:
     path: /var/testlink/upload_area
     state: directory
-    mode: '0777'
+    mode: "0777"
 
 - name: Change directory (/var/lib/php/session) group apache -> nginx
   file:
@@ -63,45 +62,45 @@
 - name: Change config.inc.php warning mode to "SILENT"
   lineinfile:
     path: /var/www/testlink/config.inc.php
-    regexp: 'config_check_warning_mode'
+    regexp: "config_check_warning_mode"
     line: $tlCfg->config_check_warning_mode = 'SILENT';
   notify:
-  - Restart php-fpm
+    - Restart php-fpm
 
 - name: Modify php.ini to optimize max_execution_time configuration for TestLink
   ini_file:
     path: /etc/php.ini
     section: PHP
     option: max_execution_time
-    value: '120'
+    value: "120"
   notify:
-  - Restart php-fpm
+    - Restart php-fpm
 
 - name: Modify php.ini to optimize session.gc_maxlifetime configuration for TestLink
   ini_file:
     path: /etc/php.ini
     section: Session
     option: session.gc_maxlifetime
-    value: '2400'
+    value: "2400"
   notify:
-  - Restart php-fpm
+    - Restart php-fpm
 
 - name: Modify php.ini to set max_input_vars = 1000 for TestLink
   lineinfile:
     path: /etc/php.ini
-    regexp: 'max_input_vars'
+    regexp: "max_input_vars"
     line: max_input_vars = 1000
   notify:
-  - Restart php-fpm
+    - Restart php-fpm
 
-- name: Modify php.ini to set date.timezone = 'America/Los_Angeles'
+- name: Modify php.ini to set date.timezone = 'America/Sao_Paulo'
   ini_file:
     path: /etc/php.ini
     section: Date
     option: date.timezone
-    value: 'America/Los_Angeles'
+    value: "America/Sao_Paulo"
   notify:
-  - Restart php-fpm
+    - Restart php-fpm
 
 - name: Create TestLink database
   mysql_db:
@@ -133,8 +132,8 @@
 - name: Change an example db to 'testlink' in udf0 sql script
   replace:
     path: /var/www/testlink/install/sql/mysql/testlink_create_udf0.sql
-    regexp: 'YOUR_TL_DBNAME'
-    replace: 'testlink'
+    regexp: "YOUR_TL_DBNAME"
+    replace: "testlink"
 
 - name: SET GLOBAL log_bin_trust_function_creators = 1; in udf0 sql script
   mysql_variables:
